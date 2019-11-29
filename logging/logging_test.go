@@ -3,9 +3,9 @@ package logging
 import (
 	"context"
 	"github.com/containerd/containerd/log"
+	"github.com/eelabs/testifyplus"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"github.com/eelabs/testifyplus"
 	"os"
 	"testing"
 )
@@ -13,7 +13,6 @@ import (
 func init() {
 	testifyplus.InitialiseLogrus()
 }
-
 
 func TestWithExecutionID(t *testing.T) {
 	ctx, _ := testifyplus.UnitTestContextLogger(t)
