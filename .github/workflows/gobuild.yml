@@ -1,0 +1,91 @@
+name: whathappened::Build
+
+on:
+  push:
+    branch:
+      - master
+  pull_request:
+    branches-ignore:
+      - master
+
+env:
+  GOFLAGS: '-mod=vendor'
+
+jobs:
+  review:
+    name: Review code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@master
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # https://staticcheck.io/docs/checks
+      - name: Check suspicious constructs (staticcheck)
+        run: |
+          ## add executables installed with go get to PATH
+          ## TODO: this will hopefully be fixed by
+          ## https://github.com/actions/setup-go/issues/14
+          export PATH=${PATH}:`go env GOPATH`/bin
+          GOFLAGS='' go get honnef.co/go/tools/cmd/staticcheck
+          staticcheck ./...
+
+      - name: Check suspicious constructs (vet)
+        run: |
+          GOFLAGS='' go vet ./...
+
+  security:
+    name: Review security
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@master
+
+      # https://github.com/securego/gosec
+      - name: Scan for security issues (gosec)
+        run: |
+          export PATH=$PATH:$(go env GOPATH)/bin
+          curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b GOPATH/bin v2.1.0
+          GOPATH/bin/gosec ./...
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go 1.13
+        uses: actions/setup-go@v1
+        with:
+          go-version: 1.13
+        id: go
+
+      - name: Check out code
+        uses: actions/checkout@master
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: test
+        run: |
+          go test -v ./... -cover -coverprofile=cover.out
