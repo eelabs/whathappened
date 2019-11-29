@@ -4,7 +4,6 @@
 
 Utility library to help log event metrics
 
-
 ## Versioning / Release Strategy
 
 The versioning/release strategy follows [Semver](https://www.semver.org)
