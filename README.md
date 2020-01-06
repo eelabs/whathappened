@@ -5,7 +5,4 @@
 Utility library to help log event metrics
 
 ## Versioning / Release Strategy
-
-The versioning/release strategy follows [Semver](https://www.semver.org)
-
-You can find current releases tagged under the [releases section](https://github.com/eelabs/whathappened/releases).
+This repository follows [Semver](https://www.semver.org) versioning strategy
