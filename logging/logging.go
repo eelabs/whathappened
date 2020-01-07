@@ -10,10 +10,11 @@ import (
 )
 
 const (
-	InvokedFunction = "invokedFunction"
-	ExecutionID     = "executionId"
-	Environment     = "environment"
-	EnvironmentKey  = "ENVIRONMENT"
+	InvokedFunction    = "invokedFunction"
+	ExecutionID        = "executionId"
+	Environment        = "environment"
+	EnvironmentKey     = "ENVIRONMENT"
+	AwsLambdaFnNameKey = "AWS_LAMBDA_FUNCTION_NAME"
 )
 
 var (
@@ -39,12 +40,12 @@ func AppDetails(commitID *string, env *string) {
 	}).Warn("Application details")
 }
 
-func NewLambdaInvocation(fnName string, env *string) *logrus.Entry {
+func NewLambdaInvocation(fnName *string, env *string) *logrus.Entry {
 	logger := log.L.WithFields(logrus.Fields{
 		Environment:     defaultEnv(env),
-		InvokedFunction: fnName,
+		InvokedFunction: defaultFnName(fnName),
 	})
-	logger.Info("New lambda invocation")
+	logger.Info("New lambda invoked")
 	return logger
 }
 
@@ -53,6 +54,13 @@ func defaultEnv(env *string) string {
 		return os.Getenv(EnvironmentKey)
 	}
 	return os.Getenv(*env)
+}
+
+func defaultFnName(fnName *string) string {
+	if fnName == nil {
+		return os.Getenv(AwsLambdaFnNameKey)
+	}
+	return os.Getenv(*fnName)
 }
 
 func AddFields(ctx context.Context, f logrus.Fields) context.Context {
