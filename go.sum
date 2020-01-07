@@ -3,8 +3,8 @@ github.com/containerd/containerd v1.3.1/go.mod h1:bC6axHOhabU15QhwfG7w5PipXdVtMX
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/eelabs/testifyplus v1.0.0 h1:B4W8K3ujxEXHWytIACvLkEAGFslqjLMFNpGoGBi8wes=
-github.com/eelabs/testifyplus v1.0.0/go.mod h1:2BNjGct5TITRYORk1C3eQG4nK9YoUMC/znaIVsUwV0M=
+github.com/eelabs/testifyplus v1.1.0 h1:Y+3PucOvorF7/HDR2wfdoKLBkadvIUqL/zvEnmk+2cA=
+github.com/eelabs/testifyplus v1.1.0/go.mod h1:2BNjGct5TITRYORk1C3eQG4nK9YoUMC/znaIVsUwV0M=
 github.com/google/go-cmp v0.3.1 h1:Xye71clBPdm5HgqGwUkwhbynsUJZhDbS20FvLhQ2izg=
 github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMywk6iLU=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=

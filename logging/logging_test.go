@@ -40,13 +40,13 @@ func TestWithExecutionID(t *testing.T) {
 }
 
 func TestNewLambdaInvocation(t *testing.T) {
-	//ctx, _ := testifyplus.UnitTestContextLogger(t)
-
 	env := "PRODUCTION"
-	envKey := "sys_environment_key"
+	envKey := "SYS_ENVIRONMENT_KEY"
 	assert.NoError(t, os.Setenv(envKey, env))
 	funcName := "funcBeingExecuted"
-	logger := NewLambdaInvocation(funcName, &envKey)
+	funcNameKey := "PROVIDED_FUNC_NAME_KEY"
+	assert.NoError(t, os.Setenv(funcNameKey, funcName))
+	logger := NewLambdaInvocation(&funcNameKey, &envKey)
 
 	actualFuncName := logger.Data[InvokedFunction]
 	actualEnv := logger.Data[Environment]
@@ -55,12 +55,14 @@ func TestNewLambdaInvocation(t *testing.T) {
 
 	env = "DEFAULTED_ENV"
 	assert.NoError(t, os.Setenv(EnvironmentKey, env))
-	logger = NewLambdaInvocation(funcName, nil)
+	funcName = "lambdaFn"
+	assert.NoError(t, os.Setenv(AwsLambdaFnNameKey, funcName))
+	logger = NewLambdaInvocation(nil, nil)
 
-	actualFuncName = logger.Data[InvokedFunction]
 	actualEnv = logger.Data[Environment]
-	assert.Equal(t, funcName, actualFuncName)
 	assert.Equal(t, env, actualEnv)
+	actualFuncName = logger.Data[InvokedFunction]
+	assert.Equal(t, funcName, actualFuncName)
 }
 
 // not a test just a convenience to execute func
