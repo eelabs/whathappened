@@ -2,6 +2,7 @@ package logging
 
 import (
 	"context"
+	"fmt"
 	"github.com/containerd/containerd/log"
 	"github.com/google/uuid"
 	"github.com/sirupsen/logrus"
@@ -58,7 +59,11 @@ func defaultEnv(env *string) string {
 
 func defaultFnName(fnName *string) string {
 	if fnName == nil {
-		return os.Getenv(AwsLambdaFnNameKey)
+		fn := os.Getenv(AwsLambdaFnNameKey)
+		if len(fn) == 0 {
+			return fmt.Sprintf("FN_NAME_%s", uuid.New().String())
+		}
+		return fn
 	}
 	return os.Getenv(*fnName)
 }

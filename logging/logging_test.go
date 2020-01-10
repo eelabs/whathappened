@@ -2,11 +2,13 @@ package logging
 
 import (
 	"context"
+	"fmt"
 	"github.com/containerd/containerd/log"
 	"github.com/eelabs/testifyplus"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"os"
+	"strings"
 	"testing"
 )
 
@@ -55,6 +57,14 @@ func TestNewLambdaInvocation(t *testing.T) {
 
 	env = "DEFAULTED_ENV"
 	assert.NoError(t, os.Setenv(EnvironmentKey, env))
+	//no env var for defaulted env key
+	logger = NewLambdaInvocation(nil, nil)
+
+	actualEnv = logger.Data[Environment]
+	assert.Equal(t, env, actualEnv)
+	actualFuncName = logger.Data[InvokedFunction]
+	assert.True(t, strings.Contains(fmt.Sprintf("%v", actualFuncName), "FN_NAME_"))
+
 	funcName = "lambdaFn"
 	assert.NoError(t, os.Setenv(AwsLambdaFnNameKey, funcName))
 	logger = NewLambdaInvocation(nil, nil)
