@@ -38,7 +38,7 @@ func AppDetails(commitID *string, env *string) {
 	logrus.WithFields(logrus.Fields{
 		"commitId":    commitID,
 		"environment": defaultEnv(env),
-	}).Warn("Application details")
+	}).Info("Application details")
 }
 
 func NewLambdaInvocation(fnName *string, env *string) *logrus.Entry {
