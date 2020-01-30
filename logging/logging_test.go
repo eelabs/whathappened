@@ -6,6 +6,7 @@ import (
 	"github.com/containerd/containerd/log"
 	"github.com/eelabs/testifyplus"
 	"github.com/google/uuid"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"strings"
@@ -73,6 +74,16 @@ func TestNewLambdaInvocation(t *testing.T) {
 	assert.Equal(t, env, actualEnv)
 	actualFuncName = logger.Data[InvokedFunction]
 	assert.Equal(t, funcName, actualFuncName)
+}
+
+func TestConfigureJSONFormatting(t *testing.T) {
+	ConfigureJSONFormatting(nil)
+	assert.Equal(t, logrus.WarnLevel, logrus.GetLevel())
+
+	key := "LOG_LEVEL"
+	assert.NoError(t, os.Setenv(key, "panic"))
+	ConfigureJSONFormatting(&key)
+	assert.Equal(t, logrus.PanicLevel, logrus.GetLevel())
 }
 
 // not a test just a convenience to execute func
