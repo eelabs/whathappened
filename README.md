@@ -1,6 +1,6 @@
 # whathappened
 
-![Actions Status](https://github.com/eelabs/whathappened/workflows/whathappened%3A%3ABuild/badge.svg)
+![Actions Status](https://github.com/eelabs/whathappened/workflows/build/badge.svg)
 
 Utility library to help log event metrics
 
