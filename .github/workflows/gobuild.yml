@@ -8,9 +8,6 @@ on:
     branches-ignore:
       - master
 
-env:
-  GOFLAGS: '-mod=vendor'
-
 jobs:
   review:
     name: Review code
@@ -44,16 +41,16 @@ jobs:
 
       - name: Check suspicious constructs (vet)
         run: |
-          GOFLAGS='' go vet ./...
+          go vet ./...
 
   security:
     name: Review security
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.13
+      - name: Set up Go 1.14
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13
+          go-version: 1.14
         id: go
 
       - name: Check out code
@@ -63,7 +60,7 @@ jobs:
       - name: Scan for security issues (gosec)
         run: |
           export PATH=$PATH:$(go env GOPATH)/bin
-          curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b GOPATH/bin v2.1.0
+          curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b GOPATH/bin v2.2.0
           GOPATH/bin/gosec ./...
 
   vulnerabilities:
@@ -74,10 +71,11 @@ jobs:
         uses: actions/checkout@master
 
       # https://github.com/sonatype-nexus-community/intentionally-vulnerable-golang-project
+      # https://github.com/sonatype-nexus-community/nancy
       - name: Run Nancy
         run: |
           cd /tmp && mkdir tools && cd -
-          curl -s -L "https://github.com/sonatype-nexus-community/nancy/releases/download/v0.0.40/nancy-linux.amd64-v0.0.40" -o "/tmp/tools/nancy"
+          curl -s -L "https://github.com/sonatype-nexus-community/nancy/releases/download/v0.1.15/nancy-linux.amd64-v0.1.15" -o "/tmp/tools/nancy"
           chmod +x /tmp/tools/nancy
           /tmp/tools/nancy go.sum
 
@@ -85,10 +83,10 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.13
+      - name: Set up Go 1.14
         uses: actions/setup-go@v1
         with:
-          go-version: 1.13
+          go-version: 1.14
         id: go
 
       - name: Check out code
