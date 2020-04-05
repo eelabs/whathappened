@@ -32,11 +32,7 @@ jobs:
       # https://staticcheck.io/docs/checks
       - name: Check suspicious constructs (staticcheck)
         run: |
-          ## add executables installed with go get to PATH
-          ## TODO: this will hopefully be fixed by
-          ## https://github.com/actions/setup-go/issues/14
-          export PATH=${PATH}:`go env GOPATH`/bin
-          GOFLAGS='' go get honnef.co/go/tools/cmd/staticcheck
+          go get honnef.co/go/tools/cmd/staticcheck
           staticcheck ./...
 
       - name: Check suspicious constructs (vet)
