@@ -29,16 +29,16 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-go-
 
+      - name: Check suspicious constructs (vet)
+        run: |
+          go vet ./...
+
       # https://staticcheck.io/docs/checks
       - name: Check suspicious constructs (staticcheck)
         run: |
           go get honnef.co/go/tools/cmd/staticcheck
-          go mod vendor
+#          go mod vendor
           staticcheck ./...
-
-      - name: Check suspicious constructs (vet)
-        run: |
-          go vet ./...
 
   security:
     name: Review security
