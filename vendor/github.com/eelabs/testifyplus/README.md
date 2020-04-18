@@ -1,6 +1,6 @@
 # testifyplus
 
-![Actions Status](https://github.com/eelabs/testifyplus/workflows/testifyplus%3A%3ABuild/badge.svg)
+![Actions Status](https://github.com/eelabs/testifyplus/workflows/build/badge.svg)
 
 Helper functions on top of [testify](https://github.com/stretchr/testify)
 

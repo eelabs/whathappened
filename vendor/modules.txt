@@ -1,9 +1,9 @@
-# github.com/containerd/containerd v1.3.3
+# github.com/containerd/containerd v1.3.4
 ## explicit
 github.com/containerd/containerd/log
 # github.com/davecgh/go-spew v1.1.1
 github.com/davecgh/go-spew/spew
-# github.com/eelabs/testifyplus v1.1.0
+# github.com/eelabs/testifyplus v1.3.0
 ## explicit
 github.com/eelabs/testifyplus
 # github.com/google/uuid v1.1.1
